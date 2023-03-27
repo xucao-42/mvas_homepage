@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="description"
+        content="">
+  <meta name="keywords" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Multi-View Azimuth Stereo via Tangent Space Consistency</title>
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-PYVRSFMDRL"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+
+    gtag('config', 'G-PYVRSFMDRL');
+  </script>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+        rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <link rel="icon" href="./static/images/favicon.svg">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+
+  <style>
+  .video-slider {
+    display: flex;
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+  }
+
+  .slide {
+    flex: 0 0 100%;
+    min-width: 100%;
+    transition: transform 0.5s ease;
+  }
+
+  .button {
+    margin-top: 1rem;
+  }
+
+.video {
+  width: 100%;
+  }
+
+  .caption {
+    background-color: rgb(255, 255, 255);
+    color: #000;
+    font-size: 1rem;
+    margin-top: 0rem;
+    padding: 0.1rem;
+    text-align: center;
+    width: 100%;
+  }
+</style>
+</head>
+<body>
+
+<!-- <nav class="navbar" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div> -->
+<!--   <div class="navbar-menu">
+    <div class="navbar-start" style="flex-grow: 1; justify-content: center;">
+      <a class="navbar-item" href="https://keunhong.com">
+      <span class="icon">
+          <i class="fas fa-home"></i>
+      </span>
+      </a> -->
+
+<!--       <div class="navbar-item has-dropdown is-hoverable">
+        <a class="navbar-link">
+          More Research
+        </a>
+        <div class="navbar-dropdown">
+          <a class="navbar-item" href="https://hypernerf.github.io">
+            HyperNeRF
+          </a>
+          <a class="navbar-item" href="https://nerfies.github.io">
+            Nerfies
+          </a>
+          <a class="navbar-item" href="https://latentfusion.github.io">
+            LatentFusion
+          </a>
+          <a class="navbar-item" href="https://photoshape.github.io">
+            PhotoShape
+          </a>
+        </div>
+      </div> -->
+    <!-- </div> -->
+<!-- 
+  </div>
+</nav> -->
+
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title">Multi-View Azimuth Stereo via Tangent Space Consistency</h1>
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">
+              <a href="https://xucao-42.github.io/homepage/">Xu Cao</a>,</span>
+            <span class="author-block">
+              <a href="https://sites.google.com/view/hiroaki-santo/">Hiroaki Santo</a>,</span>
+            <span class="author-block">
+              <a href="http://cvl.ist.osaka-u.ac.jp/user/okura/">Fumio Okura</a>,
+            </span>
+            <span class="author-block">
+              <a href="http://cvl.ist.osaka-u.ac.jp/en/member/matsushita/">Yasuyuki Matsushita</a>
+            </span>
+          </div>
+
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">Osaka University</span>
+          </div>
+
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">CVPR 2023</span>
+          </div>
+
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <!-- PDF Link. -->
+              <span class="link-block">
+                <a href=""
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fas fa-file-pdf"></i>
+                  </span>
+                  <span>Paper</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a href=""
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="ai ai-arxiv"></i>
+                  </span>
+                  <span>arXiv</span>
+                </a>
+              </span>
+              <!-- Video Link. -->
+              <span class="link-block">
+                <a href=""
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-youtube"></i>
+                  </span>
+                  <span>Video</span>
+                </a>
+              </span>
+              <!-- Code Link. -->
+              <span class="link-block">
+                <a href="https://github.com/xucao-42/mvas"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-github"></i>
+                  </span>
+                  <span>Code</span>
+                  </a>
+              </span>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="hero teaser">
+  <div class="container is-max-desktop">
+    <div class="hero-body">
+      <video id="teaser" autoplay muted loop playsinline height="100%">
+        <source src="./static/videos/teaser.mp4"
+                type="video/mp4">
+      </video>
+      <h2 class="subtitle has-text-centered">
+        3D reconstruction from surface azimuth maps.
+      </h2>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <!-- Abstract. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+            We present a method for 3D reconstruction only using calibrated multi-view surface azimuth maps.
+            Our method, multi-view azimuth stereo, is effective for textureless or specular surfaces, which are difficult for conventional multi-view stereo methods.
+            We introduce <span style="color: #FF8C00">the concept of tangent space consistency: Multi-view azimuth observations of a surface point should be lifted to the same tangent space.</span> 
+            Leveraging this consistency, we recover the shape by optimizing a neural implicit surface representation.
+            <span style="color: #228B22">Our method harnesses the robust azimuth estimation capabilities of photometric stereo methods or polarization imaging while bypassing potentially complex zenith angle estimation.</span>
+            Experiments using azimuth maps from various sources validate the accurate shape recovery with our method, even without zenith angles.
+        </div>
+      </div>
+    </div>
+    <!--/ Abstract. -->
+
+    <!-- Paper video. -->
+<!--     <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Video</h2>
+        <div class="publication-video">
+          <!-- <iframe src="https://www.youtube.com/embed/MrKrnHhk8IA?rel=0&amp;showinfo=0"
+                  frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe> -->
+<!--         </div>
+      </div>
+    </div> -->
+    <!--/ Paper video. -->
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+  <div class="columns is-centered">
+  <h2 class="title is-3">Approach Overview</h2>
+  <p></p>
+  </div></div>
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <!-- Visual Effects. -->
+      <div class="column">
+        <div class="content">
+          <img src="./static/images/TSC.png" alt="Teaser" style="width:96%;">
+          <h3 class="title is-5 has-text-centered">Tangent Space Consistency</h3>
+          An azimuth angle can be converted to a tangent vector with camera orientation. The tangents in different views, but projected from the same surface point, should lie in the same tangent space (i.e., perpendicular to the same normal vector).
+        </div>
+      </div>
+      <!--/ TSC. -->
+
+      <div class="column">
+        <div class="columns is-centered">
+          <div class="column content">
+          <img src="./static/images/neural_sdf_optimization.png" alt="Teaser" style="width:100%;">
+            <h3 class="title is-5 has-text-centered">Neural SDF Optimization</h3>
+              We project the surface point, found by sphere tracing, onto all views, and enforce the surface normal (i.e., SDF gradient) to be perpendicular to all tangents from visible views. We train the neural SDF with this TSC loss, silhouette, and Eikonal loss.
+          </div>
+
+        </div>
+      </div>
+    </div>
+    <!--/ Neural SDF Optimization. -->
+
+<section class="section">
+  <h2 class="title is-3 has-text-centered">Comparison on  DiLiGenT-MV</h2>
+    <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <div class="column">
+        <div class="columns is-centered">
+          <div class="column content">
+            <h3 class="title is-5 has-text-centered"><a href="https://arxiv.org/abs/2202.13071">UA-MVPS</a></h3>
+          </div>
+        </div>
+      </div>
+      <div class="column">
+        <div class="columns is-centered">
+          <div class="column content">
+            <h3 class="title is-5 has-text-centered"><a href="https://ywq.github.io/psnerf/">PS-NeRF</a></h3>
+          </div>
+        </div>
+      </div>
+      <div class="column">
+        <div class="columns is-centered">
+          <div class="column content">
+            <h3 class="title is-5 has-text-centered">MVAS</h3>
+          </div>
+        </div>
+      </div>
+      <div class="column">
+        <div class="columns is-centered">
+          <div class="column content">
+            <h3 class="title is-5 has-text-centered">GT</h3>
+          </div>
+        </div>
+      </div>
+    </div></div>
+<div class="container is-max-desktop">
+  <div class="video-slider">
+    <div class="slide">
+      <video class="video" src="static/videos/comparison/bear.mp4" controls autoplay muted loop playsinline ></video>
+      <div class="caption">Bear</div>
+    </div>
+    <div class="slide">
+      <video class="video" src="static/videos/comparison/buddha.mp4" controls autoplay muted loop playsinline ></video>
+      <div class="caption">Buddha</div>
+    </div>
+    <div class="slide">
+      <video class="video" src="static/videos/comparison/cow.mp4" controls autoplay muted loop playsinline ></video>
+      <div class="caption">Cow</div>
+    </div>
+    <div class="slide">
+      <video class="video" src="static/videos/comparison/pot2.mp4" controls autoplay muted loop playsinline ></video>
+      <div class="caption">Pot2</div>
+    </div>
+    <div class="slide">
+      <video class="video" src="static/videos/comparison/reading.mp4" controls autoplay muted loop playsinline ></video>
+      <div class="caption">Reading</div>
+    </div>
+
+    </div>
+
+    <div class="columns is-centered">
+      <div class="column is-narrow">
+        <button class="button is-info previous">Previous</button>
+        <button class="button is-info next">Next</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+    <!-- Concurrent Work. -->
+  <section class="section">
+    <div class="columns is-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3 has-text-centered">Related Links</h2>
+
+        <div class="content has-text-justified">
+          <p>
+            Our work benefited from several works.
+          </p>
+          <li>
+            Our implementation is build upon <a href="https://lioryariv.github.io/idr/">IDR</a>.
+          </li>
+          <li> 
+            <a href="https://sites.google.com/site/photometricstereodata/mv">DiLiGenT-MV</a>: The multi-view photometric stereo dataset.
+          </li>
+          <li>
+            <a href="https://guanyingc.github.io/SDPS-Net/">SDPS-Net</a>: An uncalibrated photometric stereo method for non-Lambertian scenes. We apply this method to obtain the azimuth maps shown in the teaser video.
+          </li>  
+          <li>
+            <a href="https://ywq.github.io/psnerf/">PS-NeRF</a>: A photometric stereo inverse rendering approach for geometry and reflectance recovery. 
+          </li>
+          <li>
+            <a href="https://akshatdave.github.io/pandora/">PANDORA</a>: A polarimetric inverse rendering approach for geometry and reflectance recovery. We also used their data for comparison.
+          </li>
+          <li>
+          <a href="https://openaccess.thecvf.com/content/WACV2022/html/Minami_Symmetric-Light_Photometric_Stereo_WACV_2022_paper.html">Symmetric-light PS</a>: An uncalibrated photometric stereo method good at azimuth acquisition.
+          </li>
+
+        </div>
+      </div>
+    </div>
+    <!--/ Concurrent Work. -->
+  </div>
+</section>
+
+<!-- <section class="section" id="BibTeX"> -->
+  <div class="container is-max-desktop content">
+    <h2 class="title has-text-centered">BibTeX</h2>
+    <pre><code>@inproceedings{mvas2023cao,
+  title = {Multi-View Azimuth Stereo via Tangent Space Consistency},
+  author = {Cao, Xu and Santo, Hiroaki and Okura, Fumio and Matsushita, Yasuyuki},
+  year = {2023},
+  booktitle = CVPR,
+}</code></pre>
+  </div>
+</section>
+
+
+<footer class="footer">
+  <div class="container">
+    <div class="columns is-centered">
+      <div class="content has-text-centered">
+        <div class="content">
+            Website adapted from <a href="https://nerfies.github.io">Nerfies.
+      </div>
+    </div>
+  </div>
+    </div>
+</footer>
+
+<script>
+  const videoSlider = document.querySelector(".video-slider");
+  const slides = document.querySelectorAll(".slide");
+  const previousButton = document.querySelector(".previous");
+  const nextButton = document.querySelector(".next");
+  let currentSlide = 0;
+
+  function updateSlider() {
+    const transformValue = `translateX(-${currentSlide * 100}%)`;
+    slides.forEach((slide) => {
+      slide.style.transform = transformValue;
+    });
+  }
+
+  previousButton.addEventListener("click", () => {
+    if (currentSlide > 0) {
+        currentSlide--;
+    } else {
+      currentSlide = slides.length - 1;
+    }
+    updateSlider();
+  });
+
+
+  nextButton.addEventListener("click", () => {
+    if (currentSlide < slides.length - 1) {
+      currentSlide++;
+    } else {
+      currentSlide = 0;
+    }
+    updateSlider();
+  });
+</script>
+</body>
+</html>
