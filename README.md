@@ -1,6 +1,6 @@
 # MVAS
 
-This is the repository that contains source code for the [MVAS website](https://mvas.github.io).
+This is the repository that contains source code for the [MVAS website](https://xucao-42.github.io/mvas_homepage/).
 
 If you find MVAS useful for your work please cite:
 ```
