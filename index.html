@@ -32,13 +32,14 @@
   <link rel="stylesheet"
         href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
   <link rel="stylesheet" href="./static/css/index.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css">
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script defer src="./static/js/fontawesome.all.min.js"></script>
   <script src="./static/js/bulma-carousel.min.js"></script>
   <script src="./static/js/bulma-slider.min.js"></script>
   <script src="./static/js/index.js"></script>
-
+  <script src="https://unpkg.com/interactjs/dist/interact.min.js"></script>
   <style>
   .video-slider {
     display: flex;
@@ -70,50 +71,45 @@
     text-align: center;
     width: 100%;
   }
+    .center {
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      border-radius: 10px;
+    }
+    .render_wrapper {
+      position: relative;
+      height: 300px;
+    }
+    .render_wrapper_small {
+      position: relative;
+      height: 250px;
+    }
+    .render_div {
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+
+    .nested-columns {
+      margin-bottom: 0 !important;
+    }
 </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script defer src="./static/js/fontawesome.all.min.js"></script>
+    <script src="./static/js/bulma-carousel.min.js"></script>
+    <script src="./static/js/bulma-slider.min.js"></script>
+    <script src="https://unpkg.com/interactjs/dist/interact.min.js"></script>
+    <script src="./static/js/index.js"></script>
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+    </script>
+    <script
+      type="text/javascript"
+      src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
+    ></script>
 </head>
 <body>
-
-<!-- <nav class="navbar" role="navigation" aria-label="main navigation">
-  <div class="navbar-brand">
-    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
-      <span aria-hidden="true"></span>
-      <span aria-hidden="true"></span>
-      <span aria-hidden="true"></span>
-    </a>
-  </div> -->
-<!--   <div class="navbar-menu">
-    <div class="navbar-start" style="flex-grow: 1; justify-content: center;">
-      <a class="navbar-item" href="https://keunhong.com">
-      <span class="icon">
-          <i class="fas fa-home"></i>
-      </span>
-      </a> -->
-
-<!--       <div class="navbar-item has-dropdown is-hoverable">
-        <a class="navbar-link">
-          More Research
-        </a>
-        <div class="navbar-dropdown">
-          <a class="navbar-item" href="https://hypernerf.github.io">
-            HyperNeRF
-          </a>
-          <a class="navbar-item" href="https://nerfies.github.io">
-            Nerfies
-          </a>
-          <a class="navbar-item" href="https://latentfusion.github.io">
-            LatentFusion
-          </a>
-          <a class="navbar-item" href="https://photoshape.github.io">
-            PhotoShape
-          </a>
-        </div>
-      </div> -->
-    <!-- </div> -->
-<!-- 
-  </div>
-</nav> -->
-
 
 <section class="hero">
   <div class="hero-body">
@@ -121,6 +117,7 @@
       <div class="columns is-centered">
         <div class="column has-text-centered">
           <h1 class="title is-1 publication-title">Multi-View Azimuth Stereo via Tangent Space Consistency</h1>
+          <h1 class="is-size-4 publication-authors">CVPR 2023</h1>
           <div class="is-size-5 publication-authors">
             <span class="author-block">
               <a href="https://xucao-42.github.io/homepage/">Xu Cao</a>,</span>
@@ -136,10 +133,6 @@
 
           <div class="is-size-5 publication-authors">
             <span class="author-block">Osaka University</span>
-          </div>
-
-          <div class="is-size-5 publication-authors">
-            <span class="author-block">CVPR 2023</span>
           </div>
 
           <div class="column has-text-centered">
@@ -223,18 +216,6 @@
       </div>
     </div>
     <!--/ Abstract. -->
-
-    <!-- Paper video. -->
-<!--     <div class="columns is-centered has-text-centered">
-      <div class="column is-four-fifths">
-        <h2 class="title is-3">Video</h2>
-        <div class="publication-video">
-          <!-- <iframe src="https://www.youtube.com/embed/MrKrnHhk8IA?rel=0&amp;showinfo=0"
-                  frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe> -->
-<!--         </div>
-      </div>
-    </div> -->
-    <!--/ Paper video. -->
   </div>
 </section>
 
@@ -268,9 +249,10 @@
       </div>
     </div>
     <!--/ Neural SDF Optimization. -->
+</section>  
 
 <section class="section">
-  <h2 class="title is-3 has-text-centered">Comparison on  DiLiGenT-MV</h2>
+  <h2 class="title is-3 has-text-centered">Comparison on <a href="https://sites.google.com/site/photometricstereodata/mv">DiLiGenT-MV</a></h2>
     <div class="container is-max-desktop">
     <div class="columns is-centered">
       <div class="column">
@@ -302,42 +284,136 @@
         </div>
       </div>
     </div></div>
-<div class="container is-max-desktop">
-  <div class="video-slider">
+  <div class="container is-max-desktop">
+  <div class="video-slider" data-slide="0">
     <div class="slide">
       <video class="video" src="static/videos/comparison/bear.mp4" controls autoplay muted loop playsinline ></video>
-      <div class="caption">Bear</div>
     </div>
     <div class="slide">
       <video class="video" src="static/videos/comparison/buddha.mp4" controls autoplay muted loop playsinline ></video>
-      <div class="caption">Buddha</div>
     </div>
     <div class="slide">
       <video class="video" src="static/videos/comparison/cow.mp4" controls autoplay muted loop playsinline ></video>
-      <div class="caption">Cow</div>
     </div>
     <div class="slide">
       <video class="video" src="static/videos/comparison/pot2.mp4" controls autoplay muted loop playsinline ></video>
-      <div class="caption">Pot2</div>
     </div>
     <div class="slide">
       <video class="video" src="static/videos/comparison/reading.mp4" controls autoplay muted loop playsinline ></video>
-      <div class="caption">Reading</div>
     </div>
-
     </div>
-
-    <div class="columns is-centered">
-      <div class="column is-narrow">
-        <button class="button is-info previous">Previous</button>
-        <button class="button is-info next">Next</button>
-      </div>
-    </div>
+    <div class="tabs is-centered" data-slide="0">
+    <ul>
+      <li class="is-active" data-index="0"><a>Bear</a></li>
+      <li data-index="1"><a>Buddha</a></li>
+      <li data-index="2"><a>Cow</a></li>
+      <li data-index="3"><a>Pot2</a></li>
+      <li data-index="4"><a>Reading</a></li>
+    </ul>
   </div>
 </section>
 
-    <!-- Concurrent Work. -->
-  <section class="section">
+<section class="section">
+  <h2 class="title is-3 has-text-centered">Reconstrucion with <a href="https://openaccess.thecvf.com/content/WACV2022/html/Minami_Symmetric-Light_Photometric_Stereo_WACV_2022_paper.html">SymPS</a></h2>
+    <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <div class="column">
+        <div class="columns is-centered">
+          <div class="column content">
+            <h3 class="title is-5 has-text-centered">Color images (Reference)</h3>
+          </div>
+        </div>
+      </div>
+      <div class="column">
+        <div class="columns is-centered">
+          <div class="column content">
+            <h3 class="title is-5 has-text-centered">Azimuth maps (Input)</h3>
+          </div>
+        </div>
+      </div>
+      <div class="column">
+        <div class="columns is-centered">
+          <div class="column content">
+            <h3 class="title is-5 has-text-centered">Shape</h3>
+          </div>
+        </div>
+      </div>
+    </div></div>
+  <div class="container is-max-desktop">
+  <div class="video-slider" data-slide="1">
+    <div class="slide">
+      <video class="video" src="static/videos/symps/gargoyle.mp4" controls autoplay muted loop playsinline ></video>
+    </div>
+    <div class="slide">
+      <video class="video" src="static/videos/symps/moai.mp4" controls autoplay muted loop playsinline ></video>
+    </div>
+    <div class="slide">
+      <video class="video" src="static/videos/symps/house.mp4" controls autoplay muted loop playsinline ></video>
+    </div>
+
+    </div>
+
+    <div class="tabs is-centered" data-slide="1">
+    <ul>
+      <li class="is-active" data-index="0"><a>Gargoyle</a></li>
+      <li data-index="1"><a>Moai</a></li>
+      <li data-index="2"><a>Toy House</a></li>
+    </ul>
+  </div>
+</section>
+
+<section class="section">
+  <h2 class="title is-3 has-text-centered">Results on <a href="https://akshatdave.github.io/pandora/">PANDORA</a></h2>
+    <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <div class="column">
+        <div class="columns is-centered">
+          <div class="column content">
+            <h3 class="title is-5 has-text-centered">Color images (Reference)</h3>
+          </div>
+        </div>
+      </div>
+      <div class="column">
+        <div class="columns is-centered">
+          <div class="column content">
+            <h3 class="title is-5 has-text-centered">Azimuth maps (Input)</h3>
+          </div>
+        </div>
+      </div>
+      <div class="column">
+        <div class="columns is-centered">
+          <div class="column content">
+            <h3 class="title is-5 has-text-centered">Shape</h3>
+          </div>
+        </div>
+      </div>
+    </div></div>
+  <div class="container is-max-desktop">
+  <div class="video-slider" data-slide="2">
+    <div class="slide">
+      <video class="video" src="static/videos/pandora/owl.mp4" controls autoplay muted loop playsinline ></video>
+    </div>
+    <div class="slide">
+      <video class="video" src="static/videos/pandora/vase.mp4" controls autoplay muted loop playsinline ></video>
+    </div>
+    <div class="slide">
+      <video class="video" src="static/videos/pandora/gnome.mp4" controls autoplay muted loop playsinline ></video>
+    </div>
+
+    </div>
+
+    <div class="tabs is-centered" data-slide="2">
+    <ul>
+      <li class="is-active" data-index="0"><a>Owl</a></li>
+      <li data-index="1"><a>Vase</a></li>
+      <li data-index="2"><a>Gnome</a></li>
+    </ul>
+  </div>
+</section>
+
+<!-- Concurrent Work. -->
+<section class="section">
+  <div class="container is-max-desktop content">
     <div class="columns is-centered">
       <div class="column is-full-width">
         <h2 class="title is-3 has-text-centered">Related Links</h2>
@@ -372,15 +448,15 @@
   </div>
 </section>
 
-<!-- <section class="section" id="BibTeX"> -->
+<section class="section" id="BibTeX">
   <div class="container is-max-desktop content">
     <h2 class="title has-text-centered">BibTeX</h2>
     <pre><code>@inproceedings{mvas2023cao,
-  title = {Multi-View Azimuth Stereo via Tangent Space Consistency},
-  author = {Cao, Xu and Santo, Hiroaki and Okura, Fumio and Matsushita, Yasuyuki},
-  year = {2023},
-  booktitle = CVPR,
-}</code></pre>
+      title = {Multi-View Azimuth Stereo via Tangent Space Consistency},
+      author = {Cao, Xu and Santo, Hiroaki and Okura, Fumio and Matsushita, Yasuyuki},
+      year = {2023},
+      booktitle = CVPR,
+        }</code></pre>
   </div>
 </section>
 
@@ -397,7 +473,60 @@
     </div>
 </footer>
 
+<!-- Add this before the closing </body> tag -->
 <script>
+  const tabContainers = document.querySelectorAll(".tabs[data-slide]");
+
+  tabContainers.forEach((tabContainer) => {
+    const slideIndex = parseInt(tabContainer.dataset.slide);
+    const videoSlider = document.querySelector(
+      `.video-slider[data-slide="${slideIndex}"]`
+    );
+    const slides = videoSlider.querySelectorAll(".slide");
+    const tabs = tabContainer.querySelectorAll("li");
+
+    function switchVideo(index) {
+      const transformValue = `translateX(-${index * 100}%)`;
+      slides.forEach((slide) => {
+        slide.style.transform = transformValue;
+      });
+    }
+
+    tabs.forEach((tab) => {
+      tab.addEventListener("click", () => {
+        const index = parseInt(tab.dataset.index);
+        switchVideo(index);
+
+        // Remove the "is-active" class from all tabs within the current tabContainer
+        tabs.forEach((t) => t.classList.remove("is-active"));
+        tab.classList.add("is-active");
+      });
+    });
+  });
+</script>
+<!-- <script>
+  const videoSlider = document.querySelector(".video-slider");
+  const slides = document.querySelectorAll(".slide");
+  const tabs = document.querySelectorAll(".tabs li");
+
+  function switchVideo(index) {
+    const transformValue = `translateX(-${index * 100}%)`;
+    slides.forEach((slide) => {
+      slide.style.transform = transformValue;
+    });
+  }
+
+  tabs.forEach((tab) => {
+    tab.addEventListener("click", () => {
+      const index = parseInt(tab.dataset.index);
+      switchVideo(index);
+
+      tabs.forEach((t) => t.classList.remove("is-active"));
+      tab.classList.add("is-active");
+    });
+    });
+</script> -->
+<!-- <script>
   const videoSlider = document.querySelector(".video-slider");
   const slides = document.querySelectorAll(".slide");
   const previousButton = document.querySelector(".previous");
@@ -429,6 +558,6 @@
     }
     updateSlider();
   });
-</script>
+</script> -->
 </body>
 </html>
